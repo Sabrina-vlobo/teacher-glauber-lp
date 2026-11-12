@@ -75,3 +75,62 @@ body {
     transform: scale(0.97);
   }
 }
+
+/*
+ * Entrada do hero em CSS puro: o texto já vem renderizado no HTML e anima sem
+ * esperar o JavaScript carregar (melhor LCP e menos trabalho na thread principal).
+ */
+@keyframes hero-word {
+  from {
+    /* 0.01 em vez de 0: o navegador já conta o título como pintado (LCP) no primeiro quadro */
+    opacity: 0.01;
+    filter: blur(10px);
+    translate: 0 18px;
+  }
+}
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    translate: 0 22px;
+  }
+}
+@keyframes hero-pop {
+  from {
+    opacity: 0;
+    translate: 0 26px;
+    scale: 0.94;
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+}
+.hero-word {
+  display: inline-block;
+  animation: hero-word 600ms var(--ease-out) both;
+  animation-delay: calc(60ms + var(--i, 0) * 45ms);
+}
+.hero-rise {
+  animation: hero-rise 700ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+.hero-pop {
+  animation: hero-pop 750ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+/* Pontos estáticos do hero: aparecem na hora e cobrem o celular, onde o WebGL não carrega */
+.hero-dots {
+  background-image: radial-gradient(circle, #34343a 1.5px, transparent 1.7px);
+  background-size: 22px 22px;
+  background-position: 11px 11px;
+  transition: opacity 600ms var(--ease-out);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-word,
+  .hero-rise,
+  .hero-pop {
+    animation: hero-fade 300ms ease both;
+    animation-delay: 0ms;
+  }
+}

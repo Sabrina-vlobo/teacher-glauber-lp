@@ -2,9 +2,13 @@ import type { Dicionario } from "./pt";
 
 const es: Dicionario = {
   meta: {
-    titulo: "Teacher Glauber | Clases online de inglés, español y portugués",
+    titulo: "Clases online de inglés, español y portugués | Teacher Glauber",
     descricao:
-      "Clases individuales y online enfocadas en tu carrera, entrevistas de trabajo y mudanzas a otro país. Profesor con más de 9 años de experiencia y trayectoria en RR. HH. Reserva tu clase de prueba gratis.",
+      "Clases particulares online de inglés, español y portugués para tu carrera, entrevistas de trabajo y mudanzas a otro país. Reserva tu clase de prueba gratis.",
+    imagemAlt: "Teacher Glauber: clases online de inglés, español y portugués",
+    cargo: "Profesor de idiomas",
+    servico: "Clases online de inglés, español y portugués",
+    unidadePreco: "mes",
     ogLocale: "es_ES",
   },
   mensagens: {

@@ -15,7 +15,7 @@ function SeletorIdioma({ atual, label, onSelect }: { atual: string; label: strin
           <li key={idioma.locale}>
             {/* Link comum (recarrega a página): as animações GSAP reiniciam limpas no novo idioma */}
             <a
-              href={idioma.locale === "pt-BR" ? "/" : `/${idioma.locale}`}
+              href={idioma.caminho}
               hrefLang={idioma.locale}
               lang={idioma.locale}
               title={idioma.nome}

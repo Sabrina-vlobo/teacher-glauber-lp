@@ -2,9 +2,13 @@ import type { Dicionario } from "./pt";
 
 const en: Dicionario = {
   meta: {
-    titulo: "Teacher Glauber | Online English, Spanish and Portuguese lessons",
+    titulo: "Online English, Spanish and Portuguese lessons | Teacher Glauber",
     descricao:
-      "One-to-one online lessons focused on your career, job interviews and moving abroad. Teacher with 9+ years of experience and a background in HR. Book your free trial lesson.",
+      "Private online lessons in English, Spanish and Portuguese for your career, job interviews and moving abroad. Book your free trial lesson.",
+    imagemAlt: "Teacher Glauber: online English, Spanish and Portuguese lessons",
+    cargo: "Language teacher",
+    servico: "Online English, Spanish and Portuguese lessons",
+    unidadePreco: "month",
     ogLocale: "en_US",
   },
   mensagens: {

@@ -275,6 +275,20 @@ const StarBorder = <T extends React.ElementType = 'button'>({
     let raf = 0;
     let last = performance.now();
     let alive = true;
+    // Ajuste de performance: a estrela só começa a girar depois que a página carregou
+    // e o navegador ficou ocioso, e em telas de toque desenha a ~30 fps.
+    const coarse = window.matchMedia?.('(pointer: coarse)').matches ?? false;
+    let lastDraw = 0;
+    let ready = false;
+    let idleId = 0;
+    const startWhenIdle = () => {
+      const begin = () => {
+        ready = true;
+        wake();
+      };
+      if (window.requestIdleCallback) idleId = window.requestIdleCallback(begin, { timeout: 2000 });
+      else idleId = window.setTimeout(begin, 800);
+    };
 
     let resizePending = false;
     const applyMeasure = () => {
@@ -473,6 +487,11 @@ const StarBorder = <T extends React.ElementType = 'button'>({
 
     const frame = (now: number) => {
       raf = 0;
+      if (coarse && now - lastDraw < 32) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+      lastDraw = now;
       if (resizePending) {
         resizePending = false;
         applyMeasure();
@@ -550,7 +569,7 @@ const StarBorder = <T extends React.ElementType = 'button'>({
     };
 
     const wake = () => {
-      if (raf || !alive || !state.visible) return;
+      if (raf || !alive || !state.visible || !ready) return;
       last = performance.now();
       raf = requestAnimationFrame(frame);
     };
@@ -611,9 +630,16 @@ const StarBorder = <T extends React.ElementType = 'button'>({
     root.addEventListener('focus', onFocus);
     root.addEventListener('blur', onBlur);
     measure();
+    if (document.readyState === 'complete') startWhenIdle();
+    else window.addEventListener('load', startWhenIdle, { once: true });
 
     return () => {
       alive = false;
+      window.removeEventListener('load', startWhenIdle);
+      if (idleId) {
+        window.cancelIdleCallback?.(idleId);
+        window.clearTimeout(idleId);
+      }
       wakeRef.current = null;
       cancelAnimationFrame(raf);
       resizeObserver.disconnect();

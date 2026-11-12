@@ -2,9 +2,13 @@ export type Tom = "escuro" | "papel" | "claro" | "amarelo";
 
 const pt = {
   meta: {
-    titulo: "Teacher Glauber | Aulas online de inglês, espanhol e português",
+    titulo: "Aulas online de inglês, espanhol e português | Teacher Glauber",
     descricao:
-      "Aulas individuais e online com foco em carreira, entrevistas e mudança de país. Professor com +9 anos de experiência e passagem por RH. Agende sua aula experimental gratuita.",
+      "Aulas particulares online de inglês, espanhol e português para carreira, entrevistas de emprego e mudança de país. Agende sua aula experimental gratuita.",
+    imagemAlt: "Teacher Glauber: aulas online de inglês, espanhol e português",
+    cargo: "Professor de idiomas",
+    servico: "Aulas online de inglês, espanhol e português",
+    unidadePreco: "mês",
     ogLocale: "pt_BR",
   },
   mensagens: {

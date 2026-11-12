@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://teacherglauber.com.br/sitemap.xml

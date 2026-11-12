@@ -1,13 +1,9 @@
-import dynamic from "next/dynamic";
-import BlurText from "./reactbits/BlurText";
-import AnimatedContent from "./reactbits/AnimatedContent";
+import type { CSSProperties } from "react";
+import HeroGrid from "./HeroGrid";
 import StarBorder from "./reactbits/StarBorder";
 import ButtonLink from "./ButtonLink";
 import { WhatsappLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { useContent } from "@/lib/content";
-
-// WebGL só no cliente; o fundo é decorativo, então não bloqueia a primeira pintura.
-const DotGrid = dynamic(() => import("./reactbits/DotGrid"), { ssr: false });
 
 /** Balões com a pergunta de abertura de toda entrevista, nos três idiomas. */
 const BALOES = [
@@ -23,43 +19,30 @@ const BALOES = [
 
 export default function Hero() {
   const { CTA, hero, links, ui } = useContent();
-  const ultimaPalavra = hero.titulo.split(" ").length - 1;
+  const palavras = hero.titulo.split(" ");
   return (
     <section id="topo" className="relative isolate flex flex-col justify-center overflow-hidden bg-fundo pt-[72px] lg:min-h-[100svh]">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 [mask-image:radial-gradient(120%_90%_at_75%_35%,#000_25%,transparent_75%)]"
-      >
-        <DotGrid
-          dotSize={3}
-          gap={22}
-          baseColor="#34343a"
-          activeColor="#ffc200"
-          proximity={150}
-          glow={0.45}
-          swell={0.9}
-          shockRadius={260}
-          shockStrength={4}
-        />
-      </div>
+      <HeroGrid />
       <span id="nav-sentinel" aria-hidden="true" className="absolute top-0 h-px w-px" />
 
       <div className="mx-auto w-full max-w-[1200px] px-5 pt-14 pb-20 md:px-8 md:pt-20 md:pb-24 lg:pt-12 lg:pb-20 xl:px-0">
-        <BlurText
-          as="h1"
-          text={hero.titulo}
-          trigger="load"
-          delay={70}
-          stepDuration={0.32}
-          blur={12}
-          distance={18}
-          highlightWords={[ultimaPalavra]}
-          highlightClassName="text-amarelo"
-          className="max-w-[1160px] font-display text-[clamp(2.2rem,5.1vw,3.6rem)] font-bold leading-[1.08] tracking-[-0.025em] text-texto"
-        />
+        {/* Título palavra por palavra em CSS: visível no HTML, anima sem depender do JS */}
+        <h1 className="max-w-[1160px] font-display text-[clamp(2.2rem,5.1vw,3.6rem)] font-bold leading-[1.08] tracking-[-0.025em] text-texto">
+          {palavras.map((palavra, index) => (
+            <span key={index}>
+              <span
+                className={`hero-word ${index === palavras.length - 1 ? "text-amarelo" : ""}`}
+                style={{ "--i": index } as CSSProperties}
+              >
+                {palavra}
+              </span>
+              {index < palavras.length - 1 ? " " : null}
+            </span>
+          ))}
+        </h1>
 
         <div className="mt-10 grid items-center gap-14 md:mt-14 lg:grid-cols-[minmax(0,1fr)_460px] lg:gap-16">
-          <AnimatedContent trigger="mount" delay={0.75} distance={24} duration={0.7} ease="expo.out">
+          <div className="hero-rise" style={{ "--d": "450ms" } as CSSProperties}>
             <p className="max-w-[500px] text-[17px] leading-[1.6] text-texto-2 md:text-[20px] md:leading-[1.5]">
               {hero.subtitulo}
             </p>
@@ -88,7 +71,7 @@ export default function Hero() {
                 {ui.verValores}
               </ButtonLink>
             </div>
-          </AnimatedContent>
+          </div>
 
           <div
             aria-label={ui.baloes}
@@ -96,15 +79,10 @@ export default function Hero() {
             className="relative flex flex-col gap-5 md:h-[236px] md:block"
           >
             {hero.perguntas.map((pergunta, index) => (
-              <AnimatedContent
+              <div
                 key={pergunta.texto}
-                trigger="mount"
-                delay={1 + index * 0.16}
-                distance={28}
-                scale={0.94}
-                duration={0.8}
-                ease="back.out(1.4)"
-                className={`${BALOES[index].alinhamento} md:absolute ${BALOES[index].pos}`}
+                className={`hero-pop ${BALOES[index].alinhamento} md:absolute ${BALOES[index].pos}`}
+                style={{ "--d": `${750 + index * 140}ms` } as CSSProperties}
               >
                 <p
                   lang={["en", "es", "pt"][index]}
@@ -116,7 +94,7 @@ export default function Hero() {
                     className={`absolute -bottom-[12px] size-0 border-x-[10px] border-t-[14px] border-x-transparent md:-bottom-[15px] md:border-x-[13px] md:border-t-[16px] ${BALOES[index].cauda}`}
                   />
                 </p>
-              </AnimatedContent>
+              </div>
             ))}
           </div>
         </div>

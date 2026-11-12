@@ -8,13 +8,16 @@ export type { Tom } from "./i18n/pt";
 
 const WHATSAPP_NUMBER = "5548999288648";
 
+/** Endereço definitivo do site (canonical, hreflang, Open Graph e sitemap). */
+export const SITE_URL = "https://teacherglauber.com.br";
+
 export const whatsapp = (message: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 export const IDIOMAS = [
-  { locale: "pt-BR", sigla: "PT", nome: "Português" },
-  { locale: "en", sigla: "EN", nome: "English" },
-  { locale: "es", sigla: "ES", nome: "Español" },
+  { locale: "pt-BR", sigla: "PT", nome: "Português", caminho: "/", og: "pt" },
+  { locale: "en", sigla: "EN", nome: "English", caminho: "/en", og: "en" },
+  { locale: "es", sigla: "ES", nome: "Español", caminho: "/es", og: "es" },
 ] as const;
 
 const DICIONARIOS = { "pt-BR": pt, en, es } as const;
