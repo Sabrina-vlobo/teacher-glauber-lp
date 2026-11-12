@@ -25,7 +25,7 @@ export default function Sobre() {
         >
           {sobre.abertura}
         </ScrollReveal>
-        <AnimatedContent distance={20} duration={0.7} ease="expo.out" threshold={0.4}>
+        <AnimatedContent distance={20} duration={0.7} ease="expo.out" threshold={0.15}>
           <p className="mt-6 max-w-[820px] text-[17px] leading-[1.6] text-grafite md:text-[20px] md:leading-[1.55]">
             {sobre.aberturaTexto}
           </p>
@@ -86,7 +86,7 @@ export default function Sobre() {
               ))}
             </dl>
 
-            <AnimatedContent stagger={0.08} distance={14} duration={0.6} ease="expo.out" threshold={0.5}>
+            <AnimatedContent stagger={0.08} distance={14} duration={0.6} ease="expo.out" threshold={0.15}>
               <ul className="mt-8 flex flex-col gap-3.5">
                 {sobre.formacao.map((curso) => (
                   <li key={curso} className="flex items-start gap-3 text-[16px] font-medium md:text-[17px]">
@@ -116,7 +116,7 @@ export default function Sobre() {
               className="press inline-flex w-fit items-center gap-3 rounded-full border border-nevoa px-4 py-2.5 hover:border-tinta/40"
             >
               <span className="font-display text-[18px] font-bold">5,0</span>
-              <AnimatedContent stagger={0.06} distance={6} scale={0.9} duration={0.45} ease="back.out(2)" threshold={0.6} className="flex">
+              <AnimatedContent stagger={0.06} distance={6} scale={0.9} duration={0.45} ease="back.out(2)" threshold={0.15} className="flex">
                 {Array.from({ length: depoimentos.nota }, (_, index) => (
                   <StarIcon key={index} aria-hidden="true" weight="fill" className="size-4 text-amarelo" />
                 ))}

@@ -23,7 +23,7 @@ export default function Valores() {
           distance={14}
           duration={0.6}
           ease="expo.out"
-          threshold={0.6}
+          threshold={0.15}
           className="mt-8 flex flex-col gap-3 md:mt-10 md:flex-row md:flex-wrap md:justify-center md:gap-x-8"
         >
           {valores.incluso.map((item) => (
